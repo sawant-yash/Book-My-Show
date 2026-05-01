@@ -1,0 +1,38 @@
+name: Deploy on EC2 (Self-Hosted Runner)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Stop existing container
+        run: |
+          docker stop bookmyshow || true
+          docker rm bookmyshow || true
+
+      - name: Remove old image (optional)
+        run: |
+          docker rmi bookmyshow-app || true
+
+      - name: Build Docker image
+        run: |
+          docker build -t bookmyshow-app .
+
+      - name: Run Docker container
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            --name bookmyshow \
+            bookmyshow-app
+
+      - name: Clean up unused Docker resources (optional)
+        run: |
+          docker system prune -f
