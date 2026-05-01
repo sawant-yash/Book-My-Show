@@ -18,7 +18,7 @@ jobs:
           docker stop bookmyshow || true
           docker rm bookmyshow || true
 
-      - name: Remove old image (optional)
+      - name: Remove old image (optional) 
         run: |
           docker rmi bookmyshow-app || true
 
