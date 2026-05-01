@@ -22,15 +22,9 @@ jobs:
         run: |
           docker rmi bookmyshow-app || true
 
-      - name: Debug file structure
-        run: |
-          pwd
-          ls -la
-
       - name: Build Docker image
         run: |
-          cd /home/ubuntu/actions-runner/_work/Book-My-Show/Book-My-Show
-          docker build -t bookmyshow-app -f src/Dockerfile src/
+           docker build --no-cache -t yash5030/bookmyshow -f bookmyshow-app/Dockerfile bookmyshow-app
           
       - name: Run Docker container
         run: |
