@@ -27,4 +27,16 @@ jobs:
           pwd
           ls -la
 
-     
+      - name: Build Docker image
+        run: |
+          cd /home/ubuntu/actions-runner/_work/Book-My-Show/Book-My-Show
+          docker build -t bookmyshow-app -f src/Dockerfile src/
+          
+      - name: Run Docker container
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            --name bookmyshow \
+            bookmyshow-app
+
+      
